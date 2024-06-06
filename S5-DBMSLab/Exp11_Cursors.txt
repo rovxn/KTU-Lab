@@ -1,0 +1,85 @@
+1) Consider the table Customer (accout no, customer name,balance amount,date of join).
+Implement a PL/SQL block to insert those customers who have current balance greater than 1
+Lakh and date of join before 1 january 2010 into the table premium customer who doesnt
+meet above criteria are to be inserted into table nonpremium customer .
+
+create table customers(acc_no number(16),c_name varchar(15),bal_amt number(10),DOJ
+date);
+create table premium_customers(acc_no number(16),c_name varchar(15),bal_amt
+number(10),doj date);
+create table nonpremium_customers(acc_no number(16),c_name varchar(15),bal_amt
+number(10),doj date);
+
+insert into customers values(101,'anu',150000,'12-12-1998');
+insert into customers values(102,'anjana',200000,'19-08-1997');
+insert into customers values(208,'achu',50000,'8-09-2003');
+insert into customers values(305,'gopika',95000,'10-10-2010');
+insert into customers values(409,'irene',25000,'4-03-2011');
+insert into customers values(111,'dany',100000,'11-05-2010');
+
+set serveroutput on;
+declare
+cursor s is select * from customers;
+begin
+
+for r in s
+loop
+if r.bal_amt>100000 and r.doj<'01-01-2010' then
+insert into premium_customers values(r.acc_no,r.c_name,r.bal_amt,r.doj);
+else
+insert into nonpremium_customers values(r.acc_no,r.c_name,r.bal_amt,r.doj);
+end if;
+end loop;
+end;
+
+
+2) Consider the table Account(Customer name,account number,date_last transaction,amount).
+Implement a PL/SQL block to perform the following action on the table .
+Calculate the interest of each person if it satisfies the condition
+a)if the last transaction is not on the current month insert the records into inactive customer
+b)otherwise check the balance amount and display the interest amount
+i)if the balance amount is less than 50000 interest rate is 5% of the amount
+ii)if it is between 250000 and 5 Lakhs interest rate is 10%
+iii)if the amount is greater than 5 lakh interest rate is 15%
+
+PROGRAM
+set serveroutput on;
+create table accdetails(accno number(10),cname varchar(20),lastdate date,amount
+number(7));
+insert into accdetails values(101,'anu','08-11-2017',50000);
+insert into accdetails values(102,'anagha','10-10-2017',100000);
+insert into accdetails values(103,'elizabeth','17-11-2017',25000);
+insert into accdetails values(104,'george','06-10-2017',300000);
+insert into accdetails values(105,'albyn','15-11-2017',650000);
+create table inactive_customer(accno number(10),cname varchar(20));
+declare
+cursor c1 is select * from accdetails;
+a accdetails %rowtype;
+n number;
+i number;
+begin
+open c1;
+loop
+fetch c1 into a.accno,a.cname,a.lastdate,a.amount;
+exit when c1 %notfound;
+n:=months_between(sysdate,a.lastdate);
+if n>=1 then
+insert into inactive_customer values(a.accno,a.cname);
+
+else
+if a.amount<250000 then
+i:=a.amount*0.05;
+
+dbms_output.put_line('interest of '||a.cname|| ' is :'||i);
+elsif a.amount>250000 and a.amount<500000 then
+i:=a.amount*0.1;
+dbms_output.put_line('interest of '||a.cname|| ' is :'||i);
+elsif a.amount>500000 then
+i:=a.amount*0.15;
+dbms_output.put_line('interest of '||a.cname|| ' is :'||i);
+else
+dbms_output.put_line('error');
+end if;
+end if;
+end loop;
+end;

@@ -1,0 +1,61 @@
+CREATE TABLE PRODUCT(PID INT,PNAME VARCHAR(30),UNITPRICE INT,MANUFACTURER VARCHAR(30),CATEGORY VARCHAR(30),COUNTRY VARCHAR(30));
+
+INSERT INTO PRODUCT VALUES(100, 'Washing Machine', 400, 'Samsung', 'home appliances', 'USA');
+
+INSERT INTO PRODUCT VALUES(200, 'Refrigerator',500, 'LG', 'home appliances', 'Canada');
+
+INSERT INTO PRODUCT VALUES(300, 'Laptop',900, 'Dell', 'electronics', 'USA');
+
+SELECT * FROM PRODUCT;
+
+CREATE VIEW V1 AS SELECT PID,PNAME,CATEGORY FROM PRODUCT;
+
+SELECT PNAME,COUNTRY FROM V1 WHERE CATEGORY='HOME APPLIANCES';
+
+select * from v1;
+
+UPDATE V1 SET PNAME='XSERIES' WHERE PID=200;
+
+SELECT * FROM V1;
+
+create view v2 as select PNAME,UNITPRICE,CATEGORY from PRODUCT;
+
+insert into v2 values('NewProduct',300,'electronics');
+
+create table employee(eid int,ename varchar(30),salary int,dept_id int);
+
+create table department(dept_id int, dept_name VARCHAR(30));
+
+INSERT INTO department VALUES(10, 'HR');
+
+INSERT INTO department VALUES(20, 'Engineering'),
+
+INSERT INTO department VALUES(20, 'Engineering');
+
+INSERT INTO department VALUES(30, 'Marketing');
+
+INSERT INTO department VALUES(40, 'Finance');
+
+INSERT INTO employee VALUES(101, 'John Doe', 50000, 20);
+
+INSERT INTO employee VALUES(102, 'Jane Smith', 55000, 20);
+
+INSERT INTO employee VALUES(103, 'David Johnson', 60000, 10);
+
+INSERT INTO employee VALUES(104, 'Sarah Brown', 48000, 30);
+
+INSERT INTO employee VALUES(105, 'Michael Wilson', 52000, 20);
+
+CREATE VIEW v3 AS SELECT e.eid, e.ename, e.salary,e.dept_id,d.dept_name FROM employee e INNER JOIN department d ON e.dept_id = d.dept_id;
+
+UPDATE v3 SET salary = salary + 1000 WHERE dept_id = 10;
+              
+ALTER TABLE department ADD PRIMARY KEY (dept_id);
+
+ALTER TABLE employee ADD PRIMARY KEY (eid);
+
+ALTER TABLE employee ADD FOREIGN KEY (dept_id) REFERENCES department(dept_id);
+
+INSERT INTO v3 (eid, ename, salary, dept_id) values (106, 'Alice Black', 50000, 20);
+
+select * from v3;

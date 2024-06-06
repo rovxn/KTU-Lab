@@ -1,0 +1,135 @@
+PROCEDURES:
+
+1) write a PL/SQL Procedure to find largest of two Numbers.
+
+set serveroutput on;
+PROGRAM
+declare
+a2 number:=&a2;
+b2 number:=&b2;
+c2 number:=0;
+procedure largest2 (a1 in number,b1 in number,c1 out number)
+is
+begin
+if (a1>b1) then
+c1:=a1;
+else
+c1:=b1;
+end if;
+end largest2;
+begin
+largest2(a2,b2,c2);
+dbms_output.put_line('Largest: '||c2);
+end;
+
+2) create a table emplyee( empid,empname,salary,dept,wef) write a
+procedure to accept two arguments empid and salary increment(in %).update
+the employee table with the salary increment also record the effective
+date.
+
+set serveroutput on;
+PROGRAM
+declare
+a2 number:=&a2;
+a3 number:=&a3;
+procedure upda(a1 in out number,b1 in out number)
+is
+d date;
+begin
+select sysdate into d from DUAL;
+update employ set sal=sal+((sal*b1)/100) where eid=a1;
+update employ set wef=d where eid=a1;
+end upda;
+
+begin
+upda(a2,a3);
+end;
+
+FUNCTIONS:
+
+1)write a PL/SQL function to find factorial of a Number.
+
+set serveroutput on;
+PROGRAM
+declare
+a2 number:=&a2;
+c2 number:=0;
+function factorial (a1 in number)
+return number
+as
+f number:=1;
+i number:=1;
+
+begin
+while(i<=a1)
+loop
+f:=f*i;
+i:=i+1;
+end loop;
+return (f);
+end;
+begin
+c2:=factorial(a2);
+dbms_output.put_line('Factorial: '||c2);
+end;
+
+2)sales of different products in one week is recorded Product
+(productid,productname,grade) Sales (prdctname,salesamount,salesday) .Do
+the following
+a)Write a function that displays the product name and grade of the
+given product
+b)Whenever the product sales is grater than the target value it is
+given a A grade, if there is no sale for a
+product an exception is to be raised.
+
+set serveroutput on;
+PROGRAM
+declare
+d1 number;
+e1 number;
+f1 number;
+pnull exception;
+function funct(a1 in number,a3 in number)
+return number
+as
+q number;
+z number;
+r number;
+x varchar(10);
+y varchar(10);
+begin
+select pname into x from product where pid=a1;
+select pgrade into y from product where pid=a1;
+dbms_output.put_line('name of product :'||x);
+dbms_output.put_line('grade of product :'||y);
+select sum(samount) into q from sales where pid=a1;
+dbms_output.put_line('sum of sales of '||a1||' is'||q);
+if(q>a3) then
+
+update product set pgrade='a' where pid=a1;
+end if;
+select count(pid) into z from sales where pid=a1;
+if(z<1) then
+r:=0;
+else
+r:=1;
+end if;
+return(r);
+end;
+
+begin
+d1:=&d1;
+e1:=&e1;
+f1:=funct(d1,e1);
+if f1=0 then
+raise pnull;
+end if;
+exception
+when pnull then
+dbms_output.put_line('no sales corresponding to this pid
+
+');
+
+when no_data_found then
+dbms_output.put_line('no data found:');
+end;

@@ -1,0 +1,39 @@
+CREATE TABLE Employee
+( empid int NOT NULL,
+ename char(50) NOT NULL,
+eaddress char(50),
+designation char(50),
+department char(50),
+salary int,
+joindate date,
+PRIMARY KEY (empid));
+
+insert into Employee values (23,'Moris','GNRA37','ENGINEER','SOFTWARE','8500','12-12-2016');
+insert into Employee values (12,'Louis','GNRA55','AGENT','SUPPORT','12000','15-05-2016');
+insert into Employee values (25,'Liam','GNRA25','BUG BOUNTY','TESTING','8000','10-02-2017');
+insert into Employee values (36,'Jones','GNRA36','DESIGNER','SOFTWARE','5600','16-07-2016');
+insert into Employee values (85,'Luke','GNRA59','DEVELOPER','SOFTWARE','15000','16-07-2016');
+
+SELECT * FROM Employee;
+
+SELECT ename,designation,salary FROM Employee;
+
+SELECT empid FROM Employee WHERE salary >= 10000;
+
+SELECT ename,designation FROM Employee WHERE department='SOFTWARE';
+
+SELECT * FROM Employee WHERE ename LIKE '%a';
+
+SELECT department,AVG(salary) AS AVERAGE_SALARY FROM Employee  GROUP BY department;
+
+SELECT ename,department FROM Employee WHERE designation='DEVELOPER';
+
+DELETE FROM Employee WHERE salary BETWEEN 5000 and 7500;
+
+UPDATE Employee
+SET designation = 'JOBLESS'
+WHERE joindate < ('01-08-2016');
+
+UPDATE Employee
+SET salary = salary + (salary*10/100)
+WHERE salary > 0;

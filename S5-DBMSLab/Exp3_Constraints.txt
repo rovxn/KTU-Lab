@@ -1,0 +1,92 @@
+*****QUESTION 1*****
+
+CREATE TABLE department
+(dept_no char(10) NOT NULL,
+dept_name char(50) NOT NULL,
+staffno char(5) NOT NULL,
+CONSTRAINT dept_pk PRIMARY KEY (dept_no)
+);
+
+*****QUESTION 2*****
+
+insert into department values('D1','CS','S101');
+insert into department values('D2','EC','S110');
+insert into department values('D1','EEE','S201');
+
+
+*****QUESTION 3*****
+
+CREATE TABLE books
+(title char(50) NOT NULL,
+author char(50) NOT NULL,
+CONSTRAINT title_pk PRIMARY KEY (title)
+);
+
+*****QUESTION 4*****
+
+insert into books values('DBMS','NAVATHE');
+insert into books values('C','Dennis Richie');
+insert into books values('DBMS','Korth');
+
+
+*****QUESTION 5*****
+
+CREATE TABLE library
+(title char(50),
+author char(50) NOT NULL,
+no_of_copies int DEFAULT 2,
+FOREIGN KEY (title) REFERENCES books(title) 
+);
+
+*****QUESTION 6*****
+
+insert into library values('C','Dennis Richie',5);
+insert into library values('DBMS','Navathe',10);
+insert into library values('OS','Korth',20);
+insert into library(title,author) values('COA','Hayes');
+
+*****QUESTION 7*****
+
+ALTER TABLE library
+ADD CONSTRAINT library_pk PRIMARY KEY (title,author);
+
+*****QUESTION 8*****
+
+CREATE TABLE s1
+(rollno int NOT NULL,
+name char(50) NOT NULL,
+dnum char(5) NOT NULL UNIQUE,
+CONSTRAINT s1_pk PRIMARY KEY (rollno),
+FOREIGN KEY (dnum) REFERENCES department(dept_no)
+);
+
+*****QUESTION 9*****
+
+SELECT * FROM department;
+
+*****QUESTION 10*****
+
+insert into s1 values(10,'Aswathy','D1');
+insert into s1 values(20,'Akash','D3');
+insert into s1 values(30,'Arun','D2');
+
+*****QUESTION 11*****
+
+insert into books values('null','navathe');
+SELECT * FROM books;
+
+*****QUESTION 12*****
+
+CREATE TABLE account(
+accno int NOT NULL,
+amount int NOT NULL,
+CONSTRAINT account_pk PRIMARY KEY (accno),
+CHECK(amount>=250)
+);
+
+*****QUESTION 13*****
+
+insert into account values(147,1000);
+insert into account values(210,5000);
+insert into account values(777,100);
+insert into account values(623,5001);

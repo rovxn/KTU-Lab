@@ -1,0 +1,152 @@
+---------Q1----------
+Program:
+set serveroutput on;
+Declare
+ Var1 integer;
+ Var2 integer;
+ Var3 integer;
+Begin
+ Var1:=&var1;
+ Var2:=&var2;
+ Var3:=var1+var2;
+ Dbms_output.put_line('SUM IS '||var3);
+End;
+
+
+---------Q2----------
+Program:
+set serveroutput on;
+Declare
+a number;
+b number;
+c number;
+Begin
+a:=&a;
+b:=&b;
+c:=&c;
+if (a>b) and (a>c)
+then
+dbms_output.put_line('A is GREATEST '||A);
+elsif (b>a) and (b>c)
+then
+dbms_output.put_line('B is GREATEST '||B);
+else
+dbms_output.put_line('C is GREATEST '||C);
+end if;
+End;
+
+
+---------Q3----------
+Program:
+set serveroutput on;
+declare
+i number(4):=1;
+n number(4):=&n;
+f number(4):=1;
+begin
+for i in 1..n
+loop
+f:=f*i;
+end loop;
+Dbms_output.put_line('the factorial of '||n||' is:'||f);
+end;
+
+
+
+---------Q4----------
+Program:
+set serveroutput on;
+declare
+first number:=0;
+second number:=1;
+third number;
+n number:=&n;
+i number;
+
+begin
+dbms_output.put_line('Fibonacci series is:');
+
+dbms_output.put_line(first);
+dbms_output.put_line(second);
+
+for i in 2..n
+loop
+third:=first+second;
+first:=second;
+second:=third;
+dbms_output.put_line(third);
+end loop;
+end;
+
+
+---------Q5----------
+Program:
+set serveroutput on;
+declare
+n number;
+i number;
+rev number:=0;
+r number;
+
+begin
+
+n:=&n;
+
+while n>0
+loop
+r:=mod(n,10);
+rev:=(rev*10)+r;
+n:=trunc(n/10);
+end loop;
+
+dbms_output.put_line('reverse is '||rev);
+end;
+
+
+
+---------Q6----------
+Program:
+set serveroutput on;
+DECLARE
+len number;
+palstr varchar2(20) := '&palstr';
+chkstr varchar2(20);
+
+BEGIN
+len := length(palstr);
+for i in REVERSE 1..len loop
+chkstr := chkstr||substr(palstr,i,1);
+end loop;
+if chkstr = palstr then
+dbms_output.put_line(palstr||' is a PALINDROME');
+
+else
+dbms_output.put_line(palstr||' is not a PALINDROME');
+end if;
+END;
+
+
+---------Q7----------
+Program:
+set serveroutput on;
+create table even1(nos number(2));
+create table odd1(nos number(2));
+
+declare
+n number:=&n;
+
+begin
+for i in 1..n
+loop
+if mod(i,2)=0
+then
+insert into even1 values(i);
+else
+insert into odd1 values(i);
+end if;
+end loop;
+end;
+
+select * from even1;
+select * from odd1;
+

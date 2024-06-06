@@ -1,0 +1,70 @@
+Solution:
+
+CREATE TABLE employee6(
+eno int NOT NULL,
+ename char(20) NOT NULL,
+job char(20),
+salary int,
+dno int,
+grade char
+);
+
+INSERT INTO employee6 VALUES(1,'ABC','Clerk',5000,10,'A');
+
+INSERT INTO employee6 VALUES(2,'BCD','manager',100000,30,'C');
+
+INSERT INTO employee6 VALUES(3,'CDE','it_professor',200000,20,'D');
+
+INSERT INTO employee6 VALUES(4,'DEF','manager',1500000,20,'F');
+
+CREATE TABLE dept6(
+dno int NOT NULL,
+dname char(20) NOT NULL,
+location char(15)
+);
+
+INSERT INTO dept6 VALUES(10,'Banking','chennai');
+
+INSERT INTO dept6 VALUES(20,'It','bangalore');
+
+INSERT INTO dept6 VALUES(30,'Finance','delhi');
+
+INSERT INTO dept6 VALUES(40,'Hr','Hydrabad');
+
+CREATE TABLE salary_grade(
+grade char NOT NULL,
+low_sal int,
+high_sal int
+);
+
+INSERT INTO salary_grade VALUES('A',20000,50000);
+
+INSERT INTO salary_grade VALUES('B',50001,99999);
+
+INSERT INTO salary_grade VALUES('C',100000,149999);
+
+INSERT INTO salary_grade VALUES('D',150000,199999);
+
+INSERT INTO salary_grade VALUES('E',200000,250000);
+
+SELECT dno,dname FROM dept6 WHERE dno IN(SELECT dno FROM employee6);
+
+SELECT ename,salary FROM employee WHERE salary > (SELECT salary FROM employee WHERE ename = 'BCD');
+
+SELECT ename,job FROM employee WHERE job = (SELECT job FROM employee WHERE ename = 'DEF');
+
+SELECT ename,salary FROM employee WHERE salary > (SELECT salary FROM employee WHERE dno = 30);
+
+SELECT low_sal FROM salary_grade WHERE grade = (SELECT grade FROM employee6 WHERE ename = 'ABC');
+
+SELECT dname FROM dept6 WHERE dno = (SELECT dno FROM employee6 WHERE salary = (SELECT MAX(salary) FROM employee6));
+
+SELECT AVG(salary) FROM employee6 WHERE dno =(SELECT dno FROM dept6 WHERE dname='It');
+
+SELECT * FROM employee6 WHERE dno=(SELECT dno FROM dept6 WHERE dname ='It') AND salary>170000;
+
+SELECT ename, job FROM employee6 WHERE dno =(SELECT dno FROM dept6 WHERE dname='It') ORDER BY ename;
+
+SELECT ename FROM employee WHERE salary > (SELECT AVG(low_sal) FROM salary_grade) AND salary < (SELECT AVG(high_sal) FROM salary_grade);
+
+SELECT dname FROM dept WHERE (SELECT COUNT(*) FROM employee WHERE dno = dept.dno) > (SELECT COUNT(*) FROM employee e,dept d WHERE e.dno = d.dno AND d.dname='Banking');

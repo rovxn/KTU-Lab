@@ -1,0 +1,22 @@
+1. Write a PL/SQL block to raise an exception when a division by zero occurs.
+DECLARE
+N number;
+BEGIN
+N:=10/0;
+EXCEPTION WHEN ZERO_DIVIDE THEN
+DBMS_OUTPUT.PUT_LINE('divide by zero error occures..');
+END;
+/
+
+2. Write a PL/SQL block to raise an exception “No transactions today”,when the sysday is Sunday.
+DECLARE
+ex EXCEPTION;
+BEGIN
+IF TO_CHAR(SYSDATE,'DY')=='SUN' THEN
+RAISE ex;
+END IF;
+EXCEPTION
+WHEN ex then
+DBMS_OUTPUT.put_line('No Transcations Today');
+END;
+/

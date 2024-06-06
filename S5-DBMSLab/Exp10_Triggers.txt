@@ -1,0 +1,39 @@
+1)create a trigger which shows the salary difference of a particular employee whenever salary
+is getting updated
+
+TRIGGER
+create trigger tr after update of sal on worker for each row
+declare
+diff number(10);
+begin
+diff:=:new.sal-:old.sal;
+dbms_output.put_line('Difference in salary is '||diff);
+end;
+EXP 12
+declare
+n number(3):=&workerid;
+nwsal number(5):=&nwsal;
+begin
+update worker set sal=nwsal where id=n;
+end;
+
+2)2) create a table theater (movie id, movie name,language,review_ratings).Whenever rating
+goes below 5 , the movies has to be removed from theater table and add to table outdated
+movies with attributes movie id and movie name
+
+TRIGGER
+create trigger triG
+after delete on theatre
+for each row
+begin
+insert into outdat values(:old.mov_id,:old.mov_name);
+end;
+EXP12
+declare
+a1 number:=&movie_id;
+a2 number:=&new_rating;
+begin
+if(a2<5) then
+delete from theatre where mov_id=a1;
+end if;
+end;

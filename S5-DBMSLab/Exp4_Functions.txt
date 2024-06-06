@@ -1,0 +1,47 @@
+Solution:
+
+CREATE TABLE accounts(
+accno int NOT NULL,
+customername char(50) NOT NULL,
+branch int,
+type char(50),
+openingdate date,
+currentbalance int NOT NULL
+);
+
+insert into accounts values(0001,'Joshua',5028,'Current','08-08-2015',150000);
+insert into accounts values(0005,'Vyshnav',5025,'Savings','25-06-2012',100000);
+insert into accounts values(0003,'Rovn',5028,'Savings','20-12-2018',80000);
+insert into accounts values(0007,'Vaishnav',5028,'Savings','22-10-2018',125000);
+
+SELECT AVG(currentbalance) As averagebalance
+FROM accounts;
+
+SELECT COUNT(accno)
+FROM accounts;
+
+
+SELECT MAX(currentbalance)
+FROM accounts;
+
+SELECT branch,COUNT(type) as account_type
+FROM accounts
+GROUP BY branch;
+
+SELECT customername,COUNT(type) as account_type
+FROM accounts
+GROUP BY customername
+HAVING COUNT(type)>1;
+
+SELECT customername,COUNT(*)
+FROM accounts
+GROUP BY branch
+HAVING branch IN(SELECT * FROM accounts WHERE openingdate>'03-01-2015');
+
+SELECT branch,COUNT(accno) as accounts
+FROM accounts
+GROUP BY branch;
+
+SELECT branch,COUNT(type) as account_type
+FROM accounts
+GROUP BY branch;

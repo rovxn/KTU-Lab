@@ -1,0 +1,25 @@
+CREATE TABLE student
+( roll_no int NOT NULL,
+name char(50) NOT NULL,
+address char(50),
+phone int,
+gender char(10),
+branch char(25),
+mark1 int,
+mark2 int,
+PRIMARY KEY (roll_no) 
+);
+
+ALTER TABLE student
+ADD total_marks int;  
+
+ALTER TABLE student
+MODIFY address char(20);  
+
+ALTER TABLE student
+DROP COLUMN gender;   
+
+ALTER TABLE student
+DROP COLUMN branch;  
+
+DROP TABLE student;

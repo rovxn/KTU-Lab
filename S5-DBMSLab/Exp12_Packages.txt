@@ -1,0 +1,55 @@
+create table supplier(suid number(3),suname varchar(10),sucom number(10),sucity varchar(10));
+
+insert into supplier values(1,'adam',1000,'pune');
+insert into supplier values(2,'john',2000,'mumbai');
+insert into supplier values(3,'adhya',1500,'kochi');
+insert into supplier values(4,'farhaan',3000,'kochi');
+insert into supplier values(5,'merina',2500,'banglore');
+
+create package pack_age as
+procedure alpha(a1 in number,c1 out varchar);
+function beta(a1 in number) return number;
+end pack_age;
+
+create package body pack_age as
+procedure alpha(a1 in number,c1 out varchar)
+is
+begin
+select suname into c1 from supplier where suid=a1;
+end alpha;
+
+function beta(a1 in number)
+return number
+is
+s1 number:=0;
+s2 number;
+begin
+
+select sucom into s2 from supplier where suid=a1;
+s1:=s2*12;
+return(s1);
+end;
+
+end pack_age;
+
+set serveroutput on;
+declare
+a1 number:=&a1;
+c1 varchar(10);
+bb1 number:=0;
+begin
+pack_age.alpha(a1,c1);
+dbms_output.put_line('supplier correspoding to '||a1 ||' is '||c1);
+end;
+
+set serveroutput on;
+declare
+
+b1 number:=&b1;
+c1 varchar(10);
+bb1 number:=0;
+begin
+bb1 :=pack_age.beta(b1);
+dbms_output.put_line('annual commission for '||b1||' is '||bb1);
+
+end;
