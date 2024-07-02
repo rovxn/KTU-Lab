@@ -1,0 +1,41 @@
+DESIGN:
+
+module gate(a,b,OR,AND,NAND,NOR,XOR,XNOR,NOT);
+input a,b;
+output OR,AND,NAND,NOR,XOR,XNOR,NOT;
+or (OR,a,b);
+and (AND,a,b);
+nand (NAND,a,b);
+nor (NOR,a,b);
+xor (XOR,a,b);
+xnor (XNOR,a,b);
+not (NOT,a); 
+endmodule
+
+
+TESTBENCH:
+
+moduleandgate_tb; wiret_c,t_d,t_e,t_f,t_g,t_h,t_i; regt_a,t_b;
+gate mygate(.a(t_a),.b(t_b), .OR(t_c)
+,.AND(t_d),.NAND(t_e),.NOR(t_f),.XOR(t_g),.XNOR(t_h),.NOT(t_i));
+initial begin
+$display("a b OR AND NAND NOR XOR XNOR NOT");
+$monitor(t_a," ",t_b," ",t_c,"  ",t_d," ",t_e," ",t_f," ",t_g,"	",t_h,"	",t_i);
+$dumpfile("test.vcd");
+$dumpvars; t_a=1'b0; t_b=1'b0;
+
+#5
+t_a=1'b0; t_b=1'b1;
+
+#5
+t_a=1'b1; t_b=1'b0;
+
+
+#5
+t_a=1'b1; t_b=1'b1;
+
+#5
+t_a=1'b0; t_b=1'b0;
+
+end 
+endmodule

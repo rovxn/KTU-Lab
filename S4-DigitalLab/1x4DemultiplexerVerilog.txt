@@ -1,0 +1,32 @@
+DESIGN CODE 1x4 DEMUX
+module demux(S1,S0,I,Y0,Y1,Y2,Y3);
+input I,S1,S0;
+output Y0,Y1,Y2,Y3;
+assign Y0=(~S1 & ~S0 & I);
+assign Y1=(~S1 & S0 & I);
+assign Y2=(S1 & ~S0 & I);
+assign Y3=(S1 & S0 & I);
+endmodule
+
+TESTBENCH
+module demux_tb;
+reg S1,S0,I;
+wire Y0,Y1,Y2,Y3;
+demuxmygate(.I(I),.S1(S1),.S0(S0),.Y0(Y0),.Y1(Y1),.Y2(Y2),.Y3(Y3));
+initial
+begin
+$display("\tI\tS1\tS2\tY0\tY1\tY2\tY3");
+$monitor("\t%b\t%b\t%b\t%b\t%b\t%b\t%b",I,S1,S0,Y0,Y1,Y2,Y3);
+$dumpfile("test.vcd");
+$dumpvars(1);
+I=1'b1; //single input line
+{S1,S0}=2'b00;
+#2
+{S1,S0}=2'b01;
+#2
+{S1,S0}=2'b10;
+#2
+{S1,S0}=2'b11;
+end
+initial #8 $finish;
+endmodule

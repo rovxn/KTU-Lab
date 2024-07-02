@@ -1,0 +1,29 @@
+DESIGN CODE
+module gray_bin(bin,gray);
+input [3:0] gray;
+output [3:0] bin;
+assign bin[3]=gray[3];
+assign bin[2]=bin[3]^gray[2];
+assign bin[1]=bin[2]^gray[1];
+assign bin[0]=bin[1]^gray[0];
+endmodule
+
+TESTBENCH
+module gray_bin_tb;
+reg [3:0] g;
+wire [3:0] b;
+gray_binmygate(.bin(b),.gray(g));
+initial
+begin
+$display("\tG3\tG2\tG1\tG0\tB3\tB2\tB1\tB0");
+$monitor("\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t%b",g[3],g[2],g[1],g[0],b[3],b[2],b[1],b[0]);
+$dumpfile("test.vcd");
+$dumpvars(1);
+g=4'b0000;
+end
+always #16 g[3]=~g[3];
+always #8 g[2]=~g[2];
+always #4 g[1]=~g[1];
+always #2 g[0]=~g[0];
+initial #32 $finish;
+endmodule

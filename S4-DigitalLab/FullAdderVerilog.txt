@@ -1,0 +1,42 @@
+DESIGN CODE FOR FULL ADDER STRUCTURAL MODELING
+module full_adder(Sout,Cout,a,b,Cin);
+wire S,D,E;
+input a,b,Cin;
+output Sout,Cout;
+xor (S,a,b);
+and (D,a,b);
+xor (Sout,S,Cin);
+and (E,S,Cin);
+or (Cout,D,E);
+endmodule
+
+TESTBENCH
+module full_tb;
+wire Sout,Cout;
+rega,b,Cin;
+full_addermygate(.a(a),.b(b),.Cin(Cin),.Sout(Sout),.Cout(Cout));
+initial
+begin
+$display("A\tB\tCin\tSout\tCout\tTIME");
+$monitor(a,"\t",b,"\t",Cin,"\t",Sout,"\t",Cout,$time);
+$dumpfile("test.vcd");
+$dumpvars(1);
+{a,b,Cin}=3'b000;
+#2
+{a,b,Cin}=3'b001;
+#2
+{a,b,Cin}=3'b010;
+#2
+{a,b,Cin}=3'b011;
+#2
+{a,b,Cin}=3'b100;
+#2
+{a,b,Cin}=3'b101;
+#2
+{a,b,Cin}=3'b110;
+#2
+{a,b,Cin}=3'b111;
+#2
+{a,b,Cin}=3'b000;
+end
+endmodule

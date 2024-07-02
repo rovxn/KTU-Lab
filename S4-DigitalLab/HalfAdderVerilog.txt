@@ -1,0 +1,49 @@
+DESIGN CODE FOR HALF ADDER STRUCTURAL MODELING
+module half_str(s,c,a,b);
+input a,b;
+output s,c;
+xor(s,a,b);
+and(c,a,b);
+endmodule;
+
+DESIGN CODE FOR HALF ADDER DATAFLOW MODELING
+module half_dataflow(s,c,a,b);
+input a,b;
+output s,c;
+assign s=a^b;
+assign c=a&b;
+endmodule;
+
+DESIGN CODE FOR HALF ADDER BEHAVIOURAL MODELING 
+module half_behav(s,c,a,b);
+input a,b;
+output reg s,c;
+always @(*)
+begin
+end
+s=a^b;
+c=a&b;
+endmodule;
+
+TESTBENCH
+change the name of module (half_str, half_dataflow, half_behav) according
+to the modeling in the instantiation step
+
+module half_tst;
+reg a,b; //input
+wire s,c; //output
+half_str uut(.s(s), .c(c), .a(a), .b(b)); //instantiate
+initial
+begin
+$dumpfile(&quot;test.vcd&quot;);
+$dumpvars(1);
+a=1'b0;
+b=1'b0;
+#2 a=1'b1;b=1'b0;
+#2 a=1'b0;b=1'b1;
+#2 a=1'b1;b=1'b1;
+end
+initial $monitor(&quot;time=%g, s=%b,c=%b, a=%b,b=%b&quot;, $time,s,c,a,b);
+
+initial #20 $finish;
+endmodule
